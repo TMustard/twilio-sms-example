@@ -1,6 +1,9 @@
 const http = require("http");
 const express = require("express");
 const MessagingResponse = require("twilio").twiml.MessagingResponse;
+const bodyParser = require("body-parser");
+
+app.use(bodyParser());
 
 const app = express();
 app.post("/sms", (req, res) => {
@@ -8,6 +11,7 @@ app.post("/sms", (req, res) => {
   twiml.message("Working!");
   res.writeHead(200, { "Content-Type": "text/xml" });
   res.end(twiml.toString());
+  console.log(req.body.Body);
 });
 
 http.createServer(app).listen(process.env.PORT || 1337, function() {
